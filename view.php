@@ -1,5 +1,8 @@
 <?php
-
+require 'db.php';
+session_start();
+$user = nl2br($_SESSION['user']);
+list($a,$b) = explode("<", $user);
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +34,13 @@
                         <th>Message</th>
                     </tr>
                     <?php
-                        require 'db.php';
-                        $sql = "SELECT * FROM histori ORDER BY id asc";
+                        
+                        $sql = "SELECT * FROM histori WHERE author LIKE '".$a."%' ORDER BY id ASC";
+//                        if(isset($_SESSION['user'])){
+//                            $sql .= " WHERE author LIKE '".$_SESSION['user']."%'";
+//                        }
+//                        $sql .= " ORDER BY id asc";
+                        
                         $res = mysqli_query($link, $sql);
                         $x=0;
                         $commit=0;

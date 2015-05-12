@@ -47,6 +47,7 @@ if(isset($_POST["submit"])) {
     exec("git log > ../log.txt");
     $lines = file('../log.txt');
     $history = array();
+    $name = array();
     foreach($lines as $line){
         if(strpos($line, 'commit ')===0){
             if(!empty($commit)){
@@ -61,6 +62,9 @@ if(isset($_POST["submit"])) {
         }
         else if(strpos($line, 'Author')===0){
             $commit['author'] = substr($line, strlen('Author: '));
+            if(!in_array($commit['author'], $name)){
+                array_push($name, $commit['author']);
+            }
         }
         else if(strpos($line, 'Date')===0){
             $commit['date'] = substr($line, strlen('Date:   '));
@@ -92,7 +96,14 @@ if(isset($_POST["submit"])) {
         $sql = "INSERT INTO histori(commit,merge,author,date,idate,message) VALUES ('".$history[$i]['hash']."','".$merge."','".$history[$i]['author']."','".$history[$i]['date']."','".$history[$i]['idate']."','".mysqli_real_escape_string($link,$history[$i]['message'])."')";
         mysqli_query($link, $sql) or die ("Error insert : ".  mysqli_error($link));
     }
-    header('Location: view.php');
+    if(count($name)<=1){
+        header('Location: view.php');
+    }else{
+        session_start();
+        $_SESSION['name']=$name;
+        header('Location: choose.php');
+    }
+    
 }
 ?>
 
@@ -128,11 +139,3 @@ if(isset($_POST["submit"])) {
     <script type="text/javascript" src="./js/jquery.js"></script>
 </body>
 </html>
-<!DOCTYPE html>
-<html>
-<body>
-
-
-
-</body>
-</html> 
