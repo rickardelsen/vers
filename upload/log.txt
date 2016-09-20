@@ -1,0 +1,11 @@
+commit 2162912fa0aa96f72638349188e72dce32c31199
+Author: Brian Estrada <lovesguitar@gmail.com>
+Date:   Thu Aug 11 22:48:39 2016 -0700
+
+    Update README.md
+
+commit 8df338722bd004c2cf826062f408f5c194ff98fc
+Author: Brian Estrada <lovesguitar@gmail.com>
+Date:   Thu Aug 4 10:52:41 2016 -0700
+
+    bye
